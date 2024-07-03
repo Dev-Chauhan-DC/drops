@@ -29,10 +29,30 @@ function App() {
     ]
   );
 
+  const [currentPaletteIndex, setCurrentPaletteIndex] = useState(0);
+
   const delayMillisecond = 100;
 
 
-  const colorArray = ["white", "#ffeaea", "#ffd7d7", "#ffa5a5", "#ff7474", "red",];
+  var colorArray = [
+    ["white", "#ffeaea", "#ffd7d7", "#ffa5a5", "#ff7474", "red"],
+    ["white", "#eaffea", "#d7ffd7", "#a5ffa5", "#74ff74", "green"],
+    ["white", "#eaeaff", "#d7d7ff", "#a5a5ff", "#7474ff", "blue"],
+    ["white", "#ffffea", "#ffffd7", "#ffffa5", "#ffff74", "yellow"],
+    ["white", "#eaeaff", "#d7d7ff", "#a5a5ff", "#7474ff", "purple"],
+    ["white", "#ffeaeaff", "#ffd7d7", "#ffa5a5", "#ff7474", "pink"]
+  ];
+
+  useEffect(() => {
+    const paletteInterval = setInterval(() => {
+      setCurrentPaletteIndex((prevIndex) => (prevIndex + 1) % colorArray.length);
+    }, 1000);
+
+    return () => clearInterval(paletteInterval);
+  }, []);
+
+
+
 
   useEffect(() => {
     const delay = (ms) => {
@@ -67,7 +87,7 @@ function App() {
           const newArr = prevArr.map(row => [...row]);  // Create a new 2D array
 
           if (newArr[number][0] === 0 && newArr[number][1] === 0) {
-            newArr[number][0] = colorArray.length - 1;
+            newArr[number][0] = colorArray[currentPaletteIndex].length - 1;
           }
 
           return newArr;
@@ -98,9 +118,9 @@ function App() {
               {
                 row.map((item, colIndex) =>
                   <div key={colIndex} style={{
-                    width: "20px",
-                    height: "20px",
-                    background: colorArray[item]
+                    width: "5px",
+                    height: "5px",
+                    background: colorArray[currentPaletteIndex][item]
                   }}></div>
                 )
               }
