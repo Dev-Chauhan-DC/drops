@@ -98,8 +98,8 @@ function App() {
               {
                 row.map((item, colIndex) =>
                   <div key={colIndex} style={{
-                    width: "5px",
-                    height: "5px",
+                    width: "20px",
+                    height: "20px",
                     background: colorArray[item]
                   }}></div>
                 )
